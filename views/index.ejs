@@ -1,0 +1,8 @@
+
+<% if (!user) { %>
+<h2>Welcome! Please log in.</h2>
+<a href="/auth/steam">Sign On with Steam</a>
+<% } else { %>
+<h2>Hello, <%= user.displayName %>.</h2>
+<a href="/account">Go to profile</a>
+<% } %>
