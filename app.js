@@ -3,12 +3,9 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var session = require('express-session');
-//passport
 var steamAuth = require('models/steamAuth');
-//
 var log = require('models/log')(module);
 var db = require('models/db');
-//
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -30,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-    secret: 'something',
+    secret: config.get('session:secret'),
     resave: true,
     saveUninitialized: true
 }));

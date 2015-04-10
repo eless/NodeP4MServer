@@ -1,2 +1,8 @@
 <p>ID: <%= user.id %></p>
 <p>Name: <%= user.displayName %></p>
+<% if (user && user.photos && user.photos.length > 0) { %>
+    <img src=<%= user.photos[0].value %> />
+<% } else { %>
+    <h2>No avatar</h2>
+<% } %>
+<p><a href="/logout">Logout </a></p>
