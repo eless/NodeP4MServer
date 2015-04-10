@@ -1,5 +1,6 @@
 {
   "port": "3000",
+  "herokuUrl": "https://p4m.herokuapp.com/",
   "dbConfig": {
       "host"     : "134.249.172.142",
       "port"     : "3308",
