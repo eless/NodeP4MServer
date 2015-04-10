@@ -13,8 +13,8 @@
     "cookie": ""
   },
   "steamData": {
-    "returnURL": "http://localhost:3000/auth/steam/return",
-    "realm": "http://localhost:3000/",
+    "returnURL": "http://localhost:{0}/auth/steam/return",
+    "realm": "http://localhost:{0}/",
     "apiKey": "691ECE9B5791CB26E7BBDDB192E5EB99"
   }
 }

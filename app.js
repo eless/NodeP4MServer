@@ -13,8 +13,8 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var config = require('./config/index');
 var app = express();
-//app.set('port', config.get('port'));
-log.info(config.get('port'));
+//app.set('port', process.env.PORT || config.get('port'));
+log.info(process.env.PORT || config.get('port'));
 // view engine setup
 app.engine('ejs', require('ejs-locals'));
 app.set('views', path.join(__dirname, 'views'));
