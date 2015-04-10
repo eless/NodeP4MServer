@@ -4,7 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 # git config --global core.excludesfile ~/.gitignore_global
 # Ignore config
-/config/config
+#/config/config
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp

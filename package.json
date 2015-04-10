@@ -20,5 +20,8 @@
     "passport-steam": "~0.1.4",
     "express-session": "~1.10.4",
     "nconf": "~0.7.1"
+  },
+  "engines": {
+    "node": "0.12.x"
   }
 }
