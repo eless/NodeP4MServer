@@ -25,9 +25,9 @@ passport.deserializeUser(function(user, done) {
 passport.use(new SteamStrategy(
     {
         "returnURL": process.env.NODE_ENV == 'development' ? String.format("http://localhost:{0}/auth/steam/return", process.env.PORT || config.get('port'))
-                                                : config.get('herokuUrl') + "auth/steam/return",
+                                                : process.env.URL + "auth/steam/return",
         "realm": process.env.NODE_ENV == 'development' ? String.format("http://localhost:{0}/", process.env.PORT || config.get('port'))
-                                                : config.get('herokuUrl'),
+                                                : process.env.URL,
         "apiKey": "691ECE9B5791CB26E7BBDDB192E5EB99"
     },
     function(identifier, profile, done) {

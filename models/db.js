@@ -3,7 +3,15 @@
  */
 var mysql = require('mysql');
 var config = require('../config/index');
-var connection = mysql.createConnection(config.get('dbConfig'));
+var connection = mysql.createConnection(process.env.NODE_ENV == 'development' ? config.get('dbConfig')
+                                                        :
+                                                            {
+                                                                "host": process.env.DB_HOST,
+                                                                "port": process.env.DB_PORT,
+                                                                "user": process.env.DB_LOGIN,
+                                                                "password": process.env.DB_PASSWORD,
+                                                                "database": process.env.DB_NAME
+                                                            });
 
 var select = function(table, num, callback){
     connection.connect();

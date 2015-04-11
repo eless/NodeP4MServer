@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-    secret: config.get('session:secret'),
+    secret: process.env.NODE_ENV == 'development' ? config.get('session:secret'): process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true
 }));
