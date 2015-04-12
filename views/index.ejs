@@ -3,7 +3,6 @@
 <h2>Welcome! Please log in.</h2>
 <a href="/auth/steam">Sign On with Steam</a>
 <% } else { %>
-<h2>Hello, <img src=<%= user.photos && user.photos.length? user.photos[0].value: "" %> /><%= user.displayName %>.</h2>
-<a href="/account">Go to profile</a>
+<h2>Hello, <a href="/account"><img src=<%= user.photos && user.photos.length? user.photos[0].value: "" %> /><%= user.displayName %>.</a></h2>
 <p><a href="/logout">Logout </a></p>
 <% } %>

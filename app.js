@@ -56,6 +56,26 @@ app.get(/*'/', routes*/'/', function(req, res){
 app.get('/account', ensureAuthenticated, function(req, res){
   res.render('account', { user: req.user });
 });
+app.get('/profile/:id', function(req, res){
+    var dbUser = new db.dbUser();
+    log.debug('selectUser ' + req.params.id + '... Result:');
+    dbUser.selectUser(req.params.id, function(user){
+        log.debug(user);
+        if(user && user.steam_id){
+            res.render('profile', { user: {
+                        id: user.steam_id,
+                        displayName: user.steam_name
+                    }
+            });
+        } else {
+            res.render('error', {
+                message: 'User id = ' + req.params.id + ' is not defined in p4m base',
+                error: undefined
+            });
+        }
+    });
+
+});
 app.get('/login', function(req, res){
   res.render('login', { user: req.user });
 });

@@ -30,10 +30,10 @@ var selectHero = function(table, num, callback){
     })
 };
 var dbUser = function(){
-    this.selectUser = function(userId){
+    this.selectUser = function(userId, callback){
         connection.select('d2_users', '*', { steam_id: userId }, function(error, results){
             if(error) throw error;
-            callback.call(this, results);
+            callback.call(this, results[0]);
         });
     };
     this.addNewUser = function(user, callback){

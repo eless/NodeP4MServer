@@ -1,9 +1,8 @@
 <h1>Name: <%= user.displayName %></h1>
 <p>ID: <%= user.id %></p>
 <% if (user && user.photos && user.photos.length > 0) { %>
-    <img src=<%= user.photos[0].value %> />
+<img src=<%= user.photos[0].value %> />
 <% } else { %>
-    <h2>No avatar</h2>
+<h2>No avatar</h2>
 <% } %>
-<p><a href="/logout">Logout </a></p>
 <p><a href="/">Home </a></p>
