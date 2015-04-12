@@ -64,7 +64,8 @@ app.get('/profile/:id', function(req, res){
         if(user && user.steam_id){
             res.render('profile', { user: {
                         id: user.steam_id,
-                        displayName: user.steam_name
+                        displayName: user.steam_name,
+                        logo: user.logo
                     }
             });
         } else {
