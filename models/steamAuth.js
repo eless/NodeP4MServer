@@ -1,22 +1,20 @@
 var passport = require('passport');
 var SteamStrategy = require('passport-steam').Strategy;
 var config = require('../config/index');
+var db = require('models/db');
+var log = require('models/log')(module);
 String.format = function() {
-    // The string containing the format items (e.g. "{0}")
-    // will and always has to be the first argument.
     var theString = arguments[0];
-
-    // start with the second argument (i = 1)
     for (var i = 1; i < arguments.length; i++) {
-        // "gm" = RegEx options for Global search (more than one instance)
-        // and for Multiline search
         var regEx = new RegExp("\\{" + (i - 1) + "\\}", "gm");
         theString = theString.replace(regEx, arguments[i]);
     }
-
     return theString;
-}
+};
 passport.serializeUser(function(user, done) {
+    var dbUser = new db.dbUser();
+    log.debug('upsertUser ' + user.displayName + '... Result:');
+    dbUser.upsertUser(user, log.debug);
     done(null, user);
 });
 passport.deserializeUser(function(user, done) {

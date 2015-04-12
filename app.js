@@ -43,7 +43,7 @@ app.use(function(req, res, next){
 });
 app.use(function(req, res, next){
   if(req.url === '/hero'){
-    db('p4m.d2_hero', 1, function(hero){
+    db.selectHero('p4m.d2_hero', 1, function(hero){
       res.end('hero : ' + hero);
     })
   } else {
