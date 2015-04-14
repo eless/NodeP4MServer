@@ -4,5 +4,6 @@
 <a href="/auth/steam">Sign On with Steam</a>
 <% } else { %>
 <h2>Hello, <a href="/account"><img src=<%= user.photos && user.photos.length? user.photos[0].value: "" %> /><%= user.displayName %>.</a></h2>
+<button type="button" onclick="alert('Hello world!')">Click Me!</button>
 <p><a href="/logout">Logout </a></p>
 <% } %>

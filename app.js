@@ -50,50 +50,29 @@ app.use(function(req, res, next){
     next();
   }
 });
-app.get(/*'/', routes*/'/', function(req, res){
-  res.render('index', { user: req.user });
-});
-app.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user });
-});
-app.get('/profile/:id', function(req, res){
-    var dbUser = new db.dbUser();
-    log.debug('selectUser ' + req.params.id + '... Result:');
-    dbUser.selectUser(req.params.id, function(user){
-        log.debug(user);
-        if(user && user.steam_id){
-            res.render('profile', { user: {
-                        id: user.steam_id,
-                        displayName: user.steam_name,
-                        logo: user.logo
-                    }
-            });
-        } else {
-            res.render('error', {
-                message: 'User id = ' + req.params.id + ' is not defined in p4m base',
-                error: undefined
-            });
-        }
-    });
+var index = require('./routes/index'),
+    account = require('./routes/account'),
+    profile = require('./routes/profile'),
+    login = require('./routes/profile'),
+    steamPow = require('./routes/steam'),
+    logout = require('./routes/logout')
+    ;
 
-});
-app.get('/login', function(req, res){
-  res.render('login', { user: req.user });
-});
+app.get('/', index.router);
+app.get('/account', ensureAuthenticated, account.router);
+app.get('/profile/:id', profile.router);
+app.get('/login', login.router);
 app.get('/auth/steam',
     steamAuth.authenticate('steam', { failureRedirect: '/login' }),
     function(req, res) {
-      res.redirect('/');
-});
+        res.redirect('/');
+    });
 app.get('/auth/steam/return',
     steamAuth.authenticate('steam', { failureRedirect: '/login' }),
     function(req, res) {
-      res.redirect('/');
+        res.redirect('/');
     });
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
+app.get('/logout', logout.router);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
