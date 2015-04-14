@@ -50,11 +50,12 @@ app.use(function(req, res, next){
     next();
   }
 });
+//routers
 var index = require('./routes/index'),
     account = require('./routes/account'),
     profile = require('./routes/profile'),
     login = require('./routes/profile'),
-    steamPow = require('./routes/steam'),
+    steam = require('./routes/steam'),
     logout = require('./routes/logout')
     ;
 
@@ -64,14 +65,10 @@ app.get('/profile/:id', profile.router);
 app.get('/login', login.router);
 app.get('/auth/steam',
     steamAuth.authenticate('steam', { failureRedirect: '/login' }),
-    function(req, res) {
-        res.redirect('/');
-    });
+    steam.router);
 app.get('/auth/steam/return',
     steamAuth.authenticate('steam', { failureRedirect: '/login' }),
-    function(req, res) {
-        res.redirect('/');
-    });
+    steam.router);
 app.get('/logout', logout.router);
 app.use('/users', users);
 
