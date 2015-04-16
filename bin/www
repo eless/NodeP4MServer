@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var server = require('../app');
 var debug = require('debug')('NodeP4MServer:server');
 var http = require('http');
 var config = require('config/index');
@@ -20,11 +20,12 @@ var port = normalizePort(process.env.PORT || config.get('port'));
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
-
+//var server = http.createServer(app);
+//server.http().io();
 /**
  * Listen on provided port, on all network interfaces.
  */
+
 
 server.listen(port);
 server.on('error', onError);

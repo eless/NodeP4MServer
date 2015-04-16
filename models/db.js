@@ -58,6 +58,15 @@ var dbUser = function(){
             callback.call(this, results);
         });
     };
+    this.addToTournament = function(id, callback){
+        connection.upsert('d2_users_daily', {
+                steam_id : id
+            },
+            function(error, results){
+                if(error) throw error;
+                callback.call(this, results);
+            });
+    }
 };
 
 

@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require('express.io');//require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,11 +9,9 @@ var db = require('models/db');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
 var users = require('./routes/users');
 var config = require('./config/index');
-var app = express();
-//app.set('port', process.env.PORT || config.get('port'));
+var app = express().http().io();
 log.info(process.env.PORT || config.get('port'));
 // view engine setup
 app.engine('ejs', require('ejs-locals'));
@@ -54,7 +52,7 @@ app.use(function(req, res, next){
 var index = require('./routes/index'),
     account = require('./routes/account'),
     profile = require('./routes/profile'),
-    login = require('./routes/profile'),
+    login = require('./routes/login'),
     steam = require('./routes/steam'),
     logout = require('./routes/logout')
     ;
@@ -72,6 +70,8 @@ app.get('/auth/steam/return',
 app.get('/logout', logout.router);
 app.use('/users', users);
 
+//client events
+app.io.route('addToTournament', account.events);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -88,7 +88,8 @@ if (app.get('env') === 'development') {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
-      error: err
+      error: err,
+      title: 'P4M develop test'
     });
   });
 }
@@ -99,7 +100,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: {}
+    error: {},
+    title: 'P4M develop test'
   });
 });
 

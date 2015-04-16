@@ -1,3 +1,11 @@
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script>
+    io = io.connect();
+    var emitEvent = function(event){
+        io.emit(event);
+    }
+</script>
+<% include header %>
 <h1>Name: <%= user.displayName %></h1>
 <p>ID: <%= user.id %></p>
 <% if (user && user.photos && user.photos.length > 0) { %>
@@ -5,5 +13,9 @@
 <% } else { %>
     <h2>No avatar</h2>
 <% } %>
+<h2><p>
+    <a class="btn btn-default" id="submit-tournament" onclick="emitEvent('addToTournament')" role="button">Add to tournament
+       </a>
+</p></h2>
 <p><a href="/logout">Logout </a></p>
 <p><a href="/">Home </a></p>
