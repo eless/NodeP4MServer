@@ -49,7 +49,7 @@ var dbUser = function(){
     this.upsertUser = function(user, callback){
         var accId = user.id - 76561197960265728;
         connection.upsert('d2_users', {
-                steam_id : user.id + "`",
+                steam_id : user.id,
                 steam_name : user.displayName,
                 account_id : accId,
                 logo : user.photos && user.photos[0] && user.photos[0].value || ""
