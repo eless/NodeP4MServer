@@ -12,6 +12,7 @@
     "ejs": "~2.3.1",
     "ejs-locals": "~1.0.2",
     "express": "~4.12.2",
+    "express.io": "1.1.13",
     "express-session": "1.10.4",
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0",

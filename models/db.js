@@ -47,10 +47,11 @@ var dbUser = function(){
         });
     };
     this.upsertUser = function(user, callback){
+        var accId = user.id - 76561197960265728;
         connection.upsert('d2_users', {
-                steam_id : user.id,
+                steam_id : user.id + "`",
                 steam_name : user.displayName,
-                account_id : user.id - 76561197960265728,
+                account_id : accId,
                 logo : user.photos && user.photos[0] && user.photos[0].value || ""
             },
             function(error, results){
@@ -60,7 +61,7 @@ var dbUser = function(){
     };
     this.addToTournament = function(id, callback){
         connection.upsert('d2_users_daily', {
-                steam_id : id
+                "steam_id" : id
             },
             function(error, results){
                 if(error) throw error;
