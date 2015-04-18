@@ -24,7 +24,7 @@ var selectHero = function(table, num, callback){
     if(num){
         query += (' LIMIT ' + num);
     }
-    connection.query(query, function(error, result, fields){
+    connection.query(query, function(error, result){
         if(error) throw error;
         callback.call(this, result[num - 1].name);
     })
@@ -60,11 +60,14 @@ var dbUser = function(){
         });
     };
     this.addToTournament = function(id, callback){
+        var registerOn = new Date();
         connection.upsert('d2_users_daily', {
-                "steam_id" : id
+                steam_id : id,
+                registerOn : registerOn
             },
-            function(error, results){
+            function(error, code){
                 if(error) throw error;
+                var results = {registerOn: registerOn, code: code};
                 callback.call(this, results);
             });
     }
