@@ -3,7 +3,6 @@
 <% } else { %>
 <script src="https://p4m.herokuapp.com/socket.io/socket.io.js"></script>
 <% } %>
-
 <script>
     io = io.connect();
     var emitEvent = function(event){
@@ -11,6 +10,7 @@
     }
 </script>
 <% include header %>
+<% include navbar %>
 <h1>Name: <%= user.displayName %></h1>
 <p>ID: <%= user.id %></p>
 <% if (user && user.photos && user.photos.length > 0) { %>
@@ -22,5 +22,3 @@
     <a class="btn btn-default" id="submit-tournament" onclick="emitEvent('addToTournament')" role="button">Add to tournament
        </a>
 </p></h2>
-<p><a href="/logout">Logout </a></p>
-<p><a href="/">Home </a></p>

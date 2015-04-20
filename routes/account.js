@@ -28,8 +28,7 @@ exports.addToTournament = function(req, res, next){
         res.redirect('/');
     });
 };
-//TODO заглушка, убрать после переноса
-// добавления в соревнование из страницы Аккаунта на главную
+//TODO заглушка, убрать после переноса добавления в соревнование из страницы Аккаунта на главную
 exports.events = function(){
     submitTournament();
 };
