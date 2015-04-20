@@ -34,12 +34,6 @@ app.use(steamAuth.initialize());
 app.use(steamAuth.session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
-  if(req.url === '/hello'){
-   res.end("Hello world")
-  }
-  next();
-});
-app.use(function(req, res, next){
   if(req.url === '/hero'){
     db.selectHero('p4m.d2_hero', 1, function(hero){
       res.end('hero : ' + hero);
@@ -68,7 +62,10 @@ app.get('/auth/steam/return',
     steamAuth.authenticate('steam', { failureRedirect: '/login' }),
     steam.router);
 app.get('/logout', logout.router);
+//TODO not used yet
 app.use('/users', users);
+
+app.get('/tournament/register/:id', account.addToTournament);
 
 //client events
 app.io.route('addToTournament', account.events);

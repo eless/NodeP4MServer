@@ -59,20 +59,38 @@ var dbUser = function(){
             callback.call(this, results);
         });
     };
-    this.addToTournament = function(id, callback){
+    this.addToTournament = function(id, tournamentId, callback){
         var registerOn = new Date();
         connection.upsert('d2_users_daily', {
                 steam_id : id,
-                registerOn : registerOn
+                registerOn : registerOn,
+                tournament_id : tournamentId
             },
             function(error, code){
                 if(error) throw error;
-                var results = {registerOn: registerOn, code: code};
+                var results = {
+                    registerOn: registerOn,
+                    tournament_id: tournamentId,
+                    code: code
+                };
                 callback.call(this, results);
             });
+    };
+    this.getUserTournaments = function(userId, callback){
+        connection.select('d2_users_daily', '*', { steam_id : userId }, function(error, results){
+            if(error) throw error;
+            callback.call(this, results);
+        });
     }
+};
+var getTournaments = function(callback){
+    connection.select('d2_tournaments', '*', { active: 1 }, function(error, results){
+        if(error) throw error;
+        callback.call(this, results);
+    });
 };
 
 
 module.exports.selectHero = selectHero;
 module.exports.dbUser = dbUser;
+module.exports.tournaments = getTournaments;

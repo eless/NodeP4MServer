@@ -1,0 +1,34 @@
+<div class="data-table">
+    <table border="1" cellpadding="7" cellspacing="7">
+        <tr>
+            <th width="50px">No</th>
+            <th>Tournament</th>
+            <th>Description</th>
+            <th>Registered</th>
+            <% if (user) { %>
+                <th width="120px">Register</th>
+            <% } %>
+        </tr>
+        <% if(tournaments && tournaments.length){
+            for(var i = 0;i < tournaments.length;i++) { %>
+            <tr>
+                <td><%=(i+1)%></td>
+                <td><%=tournaments[i].name%></td>
+                <td><%=tournaments[i].description%></td>
+                <td>тут будет количество зарегистрированных участников</td>
+                <% if (user) { %>
+                <td>
+                    <a class="a-inside edit" href="../tournament/register/<%=tournaments[i].id%>">Register</a>
+                </td>
+                <% } %>
+            </tr>
+        <% }
+
+        }else{ %>
+        <tr>
+            <td colspan="5">No active tournaments</td>
+        </tr>
+        <% } %>
+
+    </table>
+</div>

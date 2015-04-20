@@ -1,3 +1,14 @@
+<% if (process.env.NODE_ENV == 'development') { %>
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<% } else { %>
+<script src="https://p4m.herokuapp.com/socket.io/socket.io.js"></script>
+<% } %>
+<script>
+    io = io.connect();
+    var emitEvent = function(event){
+        io.emit(event);
+    }
+</script>
 <% include header %>
 <body>
 <% include navbar %>
@@ -10,5 +21,6 @@
 </h2>
 
 <% } %>
+<% include tournaments %>
 </body>
 <% include footer %>
