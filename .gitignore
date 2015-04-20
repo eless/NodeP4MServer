@@ -7,6 +7,6 @@
 /log/*.log
 /tmp
 config/config.json
-.idea
+/.idea
 
 node_modules
