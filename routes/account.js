@@ -4,11 +4,6 @@
 var log = require('models/log')(module);
 var db = require('models/db');
 var activeUser = undefined;
-var submitTournament = function() {
-    var dbUser = new db.dbUser();
-    log.debug('submit to tournament ' + activeUser.id + '... Result:');
-    dbUser.addToTournament(activeUser.id, null, log.debug);
-};
 exports.router  = function(req, res){
     activeUser = req.user;
     res.render('account', {
@@ -16,20 +11,12 @@ exports.router  = function(req, res){
         title: 'P4M develop test'
     });
 };
-exports.addToTournament = function(req, res, next){
-
-    var tournamentId = req.params.id;
-    var currUser = req.user;
+exports.addToTournament = function(data){
+    var tournamentId = data.data[0];
+    var currUser = data.data[1];
     var dbUser = new db.dbUser();
-    log.debug('submit to tournament #' + tournamentId+ ' user ' + currUser.id + '... Result:');
-    dbUser.addToTournament(currUser.id, tournamentId, function(arg){
+    log.debug('submit to tournament #' + tournamentId+ ' user ' + currUser + '... Result:');
+    dbUser.addToTournament(currUser, tournamentId, function(arg){
         log.debug(arg);
-        //TODO надо будет изменить, чтобы не обновлять всю страницу. Надо подумать.
-        res.redirect('/');
     });
 };
-//TODO заглушка, убрать после переноса добавления в соревнование из страницы Аккаунта на главную
-exports.events = function(){
-    submitTournament();
-};
-

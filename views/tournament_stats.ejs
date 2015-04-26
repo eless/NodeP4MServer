@@ -5,17 +5,11 @@
 <% } %>
 <script>
     io = io.connect();
-    var emitEvent = function(event){
-        io.emit(event);
-    }
 </script>
 <% include header %>
+<body>
 <% include navbar %>
-<h1>Name: <%= user.displayName %></h1>
-<p>ID: <%= user.id %></p>
-<% if (user && user.photos && user.photos.length > 0) { %>
-    <img src=<%= user.photos[0].value %> />
-<% } else { %>
-    <h2>No avatar</h2>
-<% } %>
-
+<h1>Hello, <%= name %></h1>
+<h2><%= description %></h2>
+</body>
+<% include footer %>

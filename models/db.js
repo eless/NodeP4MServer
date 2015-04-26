@@ -30,6 +30,12 @@ var selectHero = function(table, num, callback){
     })
 };
 var dbUser = function(){
+    this.account_Id = function(steam_id, callback){
+        connection.select('d2_users', 'account_id', { steam_id: steam_id }, function(error, results){
+            if(error) throw error;
+            callback.call(this, results[0]);
+        });
+    };
     this.selectUser = function(userId, callback){
         connection.select('d2_users', '*', { steam_id: userId }, function(error, results){
             if(error) throw error;
@@ -47,11 +53,11 @@ var dbUser = function(){
         });
     };
     this.upsertUser = function(user, callback){
-        var accId = user.id - 76561197960265728;
+        //var accId = user.id - 76561197960265728;
         connection.upsert('d2_users', {
                 steam_id : user.id,
                 steam_name : user.displayName,
-                account_id : accId,
+                last_loginOn : new Date(),
                 logo : user.photos && user.photos[0] && user.photos[0].value || ""
             },
             function(error, results){
@@ -61,8 +67,9 @@ var dbUser = function(){
     };
     this.addToTournament = function(id, tournamentId, callback){
         var registerOn = new Date();
-        connection.upsert('d2_users_daily', {
-                steam_id : id,
+        this.account_Id(id, function(user){
+            connection.upsert('d2_users_daily', {
+                account_id : user.account_id,
                 registerOn : registerOn,
                 tournament_id : tournamentId
             },
@@ -75,6 +82,8 @@ var dbUser = function(){
                 };
                 callback.call(this, results);
             });
+        })
+
     };
     this.getUserTournaments = function(userId, callback){
         connection.select('d2_users_daily', '*', { steam_id : userId }, function(error, results){
@@ -84,13 +93,26 @@ var dbUser = function(){
     }
 };
 var getTournaments = function(callback){
-    connection.select('d2_tournaments', '*', { active: 1 }, function(error, results){
+    var sql    = 'SELECT * FROM p4m.d2_tournaments AS tbl1 left join (select tournament_id, count(account_id) as uCount from d2_users_daily group by tournament_id) AS tbl2 on tbl2.tournament_id = tbl1.id where tbl1.active = 1';
+    connection.query(sql, function(err, results) {
+        if(err) throw err;
+        callback.call(this, results);
+    });
+    /*connection.select('d2_tournaments', '*', { active: 1 }, function(error, results){
+        if(error) throw error;
+        callback.call(this, results);
+    });*/
+};
+var getTournamentStats = function(tournamentId, callback){
+    connection.select('d2_stats_daily', '*', { active: 1 }, function(error, results){
         if(error) throw error;
         callback.call(this, results);
     });
 };
 
 
+
 module.exports.selectHero = selectHero;
 module.exports.dbUser = dbUser;
 module.exports.tournaments = getTournaments;
+module.exports.tournamentStats = getTournamentStats;

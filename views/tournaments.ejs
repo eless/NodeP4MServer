@@ -1,3 +1,11 @@
+<% if (process.env.NODE_ENV == 'development') { %>
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<% } else { %>
+<script src="https://p4m.herokuapp.com/socket.io/socket.io.js"></script>
+<% } %>
+<script>
+    io = io.connect();
+</script>
 <div class="data-table">
     <table border="1" cellpadding="7" cellspacing="7">
         <tr>
@@ -13,12 +21,12 @@
             for(var i = 0;i < tournaments.length;i++) { %>
             <tr>
                 <td><%=(i+1)%></td>
-                <td><%=tournaments[i].name%></td>
+                <td><li id="tournament-stats"><a href="/tournament/stats/<%=tournaments[i].id%>"><%=tournaments[i].name%></a></li></td>
                 <td><%=tournaments[i].description%></td>
-                <td>тут будет количество зарегистрированных участников</td>
+                <td><%=tournaments[i].uCount%></td>
                 <% if (user) { %>
                 <td>
-                    <a class="a-inside edit" href="../tournament/register/<%=tournaments[i].id%>">Register</a>
+                    <a class="btn btn-default" id="submit-tournament" onclick="io.emit('addToTournament', [<%=tournaments[i].id%>, <%=user.id%>])" role="button">Add to tournament</a>
                 </td>
                 <% } %>
             </tr>

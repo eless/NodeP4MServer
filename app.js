@@ -48,7 +48,8 @@ var index = require('./routes/index'),
     profile = require('./routes/profile'),
     login = require('./routes/login'),
     steam = require('./routes/steam'),
-    logout = require('./routes/logout')
+    logout = require('./routes/logout'),
+    tournament_stats = require('./routes/tournament_stats')
     ;
 
 app.get('/', index.router);
@@ -66,9 +67,9 @@ app.get('/logout', logout.router);
 app.use('/users', users);
 
 app.get('/tournament/register/:id', account.addToTournament);
-
+app.get('/tournament/stats/:id', tournament_stats.router);
 //client events
-app.io.route('addToTournament', account.events);
+app.io.route('addToTournament', account.addToTournament);//events
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
