@@ -33,7 +33,8 @@ var dbUser = function(){
     this.account_Id = function(steam_id, callback){
         connection.select('d2_users', 'account_id', { steam_id: steam_id }, function(error, results){
             if(error) throw error;
-            callback.call(this, results[0]);
+            if(results && results[0]) callback.call(this, results[0]);
+            else throw "No user with steam_id = " + steam_id;
         });
     };
     this.selectUser = function(userId, callback){
@@ -94,8 +95,8 @@ var dbUser = function(){
 };
 var getTournaments = function(callback){
     var sql    = 'SELECT * FROM p4m.d2_tournaments AS tbl1 left join (select tournament_id, count(account_id) as uCount from d2_users_daily group by tournament_id) AS tbl2 on tbl2.tournament_id = tbl1.id where tbl1.active = 1';
-    connection.query(sql, function(err, results) {
-        if(err) throw err;
+    connection.query(sql, function(error, results) {
+        if(error) throw error;
         callback.call(this, results);
     });
     /*connection.select('d2_tournaments', '*', { active: 1 }, function(error, results){
