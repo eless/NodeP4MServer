@@ -3,11 +3,9 @@
  */
 var log = require('models/log')(module);
 var db = require('models/db');
-var activeUser = undefined;
 exports.router  = function(req, res){
-    activeUser = req.user;
     res.render('account', {
-        user: activeUser,
+        user: req.user,
         title: 'P4M develop test'
     });
 };

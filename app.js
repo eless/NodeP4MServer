@@ -65,8 +65,6 @@ app.get('/auth/steam/return',
 app.get('/logout', logout.router);
 //TODO not used yet
 app.use('/users', users);
-
-app.get('/tournament/register/:id', account.addToTournament);
 app.get('/tournament/stats/:id', tournament_stats.router);
 //client events
 app.io.route('addToTournament', account.addToTournament);//events

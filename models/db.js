@@ -38,7 +38,7 @@ var dbUser = function(){
         });
     };
     this.selectUser = function(userId, callback){
-        connection.select('d2_users', '*', { steam_id: userId }, function(error, results){
+        connection.select('d2_users', '*', { account_id: userId }, function(error, results){
             if(error) throw error;
             callback.call(this, results[0]);
         });
@@ -87,7 +87,8 @@ var dbUser = function(){
 
     };
     this.getUserTournaments = function(userId, callback){
-        connection.select('d2_users_daily', '*', { steam_id : userId }, function(error, results){
+        var sql    = 'SELECT * FROM p4m.d2_users_daily where `steam_id` = ' + userId;
+        connection.query(sql, function(error, results){
             if(error) throw error;
             callback.call(this, results);
         });
@@ -104,8 +105,14 @@ var getTournaments = function(callback){
         callback.call(this, results);
     });*/
 };
-var getTournamentStats = function(tournamentId, callback){
-    connection.select('d2_stats_daily', '*', { active: 1 }, function(error, results){
+var getCurrentTournament = function(id, callback){
+    connection.select('p4m.d2_tournaments', '*', { id : id }, function(error, results){
+        if(error) throw error;
+        callback.call(this, results[0]);
+    });
+};
+var getTournamentStats = function(condition, callback){
+    connection.query(condition, function(error, results){
         if(error) throw error;
         callback.call(this, results);
     });
@@ -117,3 +124,4 @@ module.exports.selectHero = selectHero;
 module.exports.dbUser = dbUser;
 module.exports.tournaments = getTournaments;
 module.exports.tournamentStats = getTournamentStats;
+module.exports.currentTournament = getCurrentTournament;

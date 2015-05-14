@@ -18,20 +18,19 @@
             <% } %>
         </tr>
         <% if(tournaments && tournaments.length){
-            for(var i = 0;i < tournaments.length;i++) { %>
+            tournaments.forEach(function(tournament, i) { %>
             <tr>
                 <td><%=(i+1)%></td>
-                <td><li id="tournament-stats"><a href="/tournament/stats/<%=tournaments[i].id%>"><%=tournaments[i].name%></a></li></td>
-                <td><%=tournaments[i].description%></td>
-                <td><%=tournaments[i].uCount%></td>
+                <td id="tournament-stats"><a href="/tournament/stats/<%=tournament.id%>"><%=tournament.name%></a></td>
+                <td><%=tournament.description%></td>
+                <td><%=tournament.uCount || 0%></td>
                 <% if (user) { %>
                 <td>
-                    <a class="btn btn-default" id="submit-tournament" onclick="io.emit('addToTournament', [<%=tournaments[i].id%>, <%=user.id%>])" role="button">Add to tournament</a>
+                    <a class="btn btn-default" id="submit-tournament" onclick="io.emit('addToTournament', [<%=tournament.id%>, <%=user.id%>])" role="button">Add to tournament</a>
                 </td>
                 <% } %>
             </tr>
-        <% }
-
+        <% })
         }else{ %>
         <tr>
             <td colspan="5">No active tournaments</td>

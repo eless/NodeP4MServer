@@ -1,0 +1,22 @@
+{
+  "en":{
+    "columnNames":{
+        "steam_name": "Username",
+        "match_id":"Match",
+        "hero_name":"Hero",
+        "kills":"Kills",
+        "deaths":"Deaths",
+        "assists":"Assists",
+        "gold":"Gold",
+        "last_hits":"Last hits",
+        "denies":"Denies",
+        "gold_per_min":"GPM",
+        "xp_per_min":"XPM",
+        "gold_spent":"Gold spend",
+        "hero_damage":"Hero damage",
+        "tower_damage":"Tower damage",
+        "hero_healing":"Hero healing",
+        "level":"level"
+    }
+  }
+}

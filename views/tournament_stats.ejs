@@ -10,6 +10,31 @@
 <body>
 <% include navbar %>
 <h1>Hello, <%= name %></h1>
-<h2><%= description %></h2>
+<div class="data-table">
+    <table border="1" cellpadding="7" cellspacing="7">
+        <tr>
+        <% if(data && data.length > 0){%>
+            <% for (var column in data[0]) { %>
+                <% if(data[0].hasOwnProperty(column) && column != 'account_id') {%>
+                <th><%=column%></th>
+                <% }
+            }%>
+        </tr>
+            <%data.forEach(function(line) { %>
+        <tr>
+                <% for (var column in line) { %>
+                    <% if(line.hasOwnProperty(column) && column != 'account_id') {%>
+                        <% if(column == 'steam_name') {%>
+                        <td id="tournament-account-profile"><a href="/profile/<%=line.account_id%>"><%=line[column]%></a></td>
+                        <% } else { %>
+                        <td><%=line[column]%></td>
+                        <% }
+                        }
+                    } %>
+        </tr>
+            <% })%>
+        <% } %>
+    </table>
+</div>
 </body>
 <% include footer %>

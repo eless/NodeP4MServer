@@ -8,10 +8,10 @@ exports.router = function(req, res) {
     log.debug('selectUser ' + req.params.id + '... Result:');
     dbUser.selectUser(req.params.id, function (user) {
         log.debug(user);
-        if (user && user.steam_id) {
+        if (user && user.account_id) {
             res.render('profile', {
                 user: {
-                    id: user.steam_id,
+                    id: user.account_id,
                     displayName: user.steam_name,
                     logo: user.logo
                 },
