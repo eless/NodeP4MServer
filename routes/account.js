@@ -9,12 +9,18 @@ exports.router  = function(req, res){
         title: 'P4M develop test'
     });
 };
-exports.addToTournament = function(data){
-    var tournamentId = data.data[0];
-    var currUser = data.data[1];
-    var dbUser = new db.dbUser();
+exports.addToTournament = function(req){
+    var tournamentId = req.data[0];
+    var currUser = req.data[1];
+    var dbUser = db.dbUser;
     log.debug('submit to tournament #' + tournamentId+ ' user ' + currUser + '... Result:');
     dbUser.addToTournament(currUser, tournamentId, function(arg){
         log.debug(arg);
+        db.getUsersCount(tournamentId, function(count){
+            req.io.emit('currentUsersInTournament', {   id: req.data[0],
+                count: count
+            })
+        })
+
     });
 };

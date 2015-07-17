@@ -4,7 +4,7 @@
 var log = require('models/log')(module);
 var db = require('models/db');
 exports.router = function(req, res) {
-    var dbUser = new db.dbUser();
+    var dbUser = db.dbUser;
     log.debug('selectUser ' + req.params.id + '... Result:');
     dbUser.selectUser(req.params.id, function (user) {
         log.debug(user);

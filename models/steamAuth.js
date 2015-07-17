@@ -12,10 +12,20 @@ String.format = function() {
     return theString;
 };
 passport.serializeUser(function(user, done) {
-    var dbUser = new db.dbUser();
+    var dbUser = db.dbUser;
+    var currentUser = user;
     log.debug('upsertUser ' + user.displayName + '... Result:');
-    dbUser.upsertUser(user, log.debug);
-    done(null, user);
+    dbUser.upsertUser(user, function(res){
+        log.debug(res);
+        dbUser.account_Id(user.id, function(getUser){
+            currentUser.account_Id = getUser.account_id;
+            dbUser.isAdmin(currentUser.account_Id, function(isAdmin){
+                log.debug('User is admin: ' + isAdmin);
+                currentUser.isAdmin = isAdmin;
+                done(null, currentUser);
+            });
+        })
+    });
 });
 passport.deserializeUser(function(user, done) {
     done(null, user);

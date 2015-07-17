@@ -1,41 +1,68 @@
+<html lang="en" ng-app="app">
 <% if (process.env.NODE_ENV == 'development') { %>
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <% } else { %>
 <script src="https://p4m.herokuapp.com/socket.io/socket.io.js"></script>
 <% } %>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
 <script>
     io = io.connect();
 </script>
-<div class="data-table">
-    <table border="1" cellpadding="7" cellspacing="7">
-        <tr>
-            <th width="50px">No</th>
-            <th>Tournament</th>
-            <th>Description</th>
-            <th>Registered</th>
-            <% if (user) { %>
-                <th width="120px">Register</th>
-            <% } %>
-        </tr>
-        <% if(tournaments && tournaments.length){
-            tournaments.forEach(function(tournament, i) { %>
-            <tr>
-                <td><%=(i+1)%></td>
-                <td id="tournament-stats"><a href="/tournament/stats/<%=tournament.id%>"><%=tournament.name%></a></td>
-                <td><%=tournament.description%></td>
-                <td><%=tournament.uCount || 0%></td>
-                <% if (user) { %>
-                <td>
-                    <a class="btn btn-default" id="submit-tournament" onclick="io.emit('addToTournament', [<%=tournament.id%>, <%=user.id%>])" role="button">Add to tournament</a>
-                </td>
-                <% } %>
-            </tr>
-        <% })
-        }else{ %>
-        <tr>
-            <td colspan="5">No active tournaments</td>
-        </tr>
-        <% } %>
+<script src="js/index.js"></script>
+<body ng-controller="paginationCtrl">
+    <script>
+        /*document.addEventListener("load", function(){
+            vsr collection = rowCollection;
+            io.on('currentUsersInTournament', function (tournament) {
+                collection[tournament.id].uCount = tournament.count;
+            })
+        });*/
 
-    </table>
-</div>
+    </script>
+<table st-table="rowCollection" class="table table-striped">
+    <thead>
+    <tr>
+        <th width="50px" st-sort="No">No</th>
+        <th st-sort="tournament">Tournament</th>
+        <th>Description</th>
+        <th st-sort="registered">Registered</th>
+        <% if (user) { %>
+        <th>Register</th>
+        <% } %>
+    </tr>
+    <tr>
+        <th colspan="3">
+            <input st-search="name" placeholder="search for tournament" class="input-sm form-control" type="search"/>
+        </th>
+        <!--<th colspan="4">
+            <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+        </th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in rowCollection">
+        <td>{{row.index}}</td>
+        <td><a ng-href="/tournament/stats/{{row.id}}">{{row.name}}</a></td>
+        <td>{{row.description}}</td>
+        <td value="uCount">{{row.uCount}}</td>
+        <% if (user) { %>
+        <td>
+            <button type="button" ng-click="row.addCurrentUser(<%=user.id%>)" class="btn btn-default">
+                Add to tournament
+            </button>
+        </td>
+        <% } %>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="5" class="text-center">
+            <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+
+</body>
+</html>

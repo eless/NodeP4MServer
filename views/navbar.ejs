@@ -15,6 +15,9 @@
                     <li id="login"><a href="/auth/steam"><img src="/images/steam_auth.png" /></a></li>
                 <% } else { %>
                     <li id="logout"><a href="/logout">Logout </a></li>
+                    <% if (user.isAdmin) { %>
+                        <li id="adminPage"><a href="/adminpage"><img src="/images/adminButton_24.png" /></a></li>
+                    <% }%>
                 <% } %>
             </ul>
         </div>

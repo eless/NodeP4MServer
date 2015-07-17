@@ -43,17 +43,24 @@ app.use(function(req, res, next){
   }
 });
 //routers
-var index = require('./routes/index'),
-    account = require('./routes/account'),
-    profile = require('./routes/profile'),
-    login = require('./routes/login'),
-    steam = require('./routes/steam'),
-    logout = require('./routes/logout'),
-    tournament_stats = require('./routes/tournament_stats')
+var index = require('./routes/index')
+    ,account = require('./routes/account')
+    ,admin = require('./routes/admin')
+    ,profile = require('./routes/profile')
+    ,login = require('./routes/login')
+    ,steam = require('./routes/steam')
+    ,logout = require('./routes/logout')
+    ,tournament_stats = require('./routes/tournament_stats')
     ;
 
 app.get('/', index.router);
+
+app.get('/tournaments/tournaments.json', index.tournaments);
+app.get('/tournament/info/:id', tournament_stats.getStats);
+
 app.get('/account', ensureAuthenticated, account.router);
+app.get('/adminpage', ensureAdminAuthenticated, admin.router);
+
 app.get('/profile/:id', profile.router);
 app.get('/login', login.router);
 app.get('/auth/steam',
@@ -68,6 +75,10 @@ app.use('/users', users);
 app.get('/tournament/stats/:id', tournament_stats.router);
 //client events
 app.io.route('addToTournament', account.addToTournament);//events
+app.io.route('addTournament', db.addTournament);
+/*app.io.route('adminBtnClk', function(req, res){
+    res.redirect('/adminPage');
+});*/
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -100,10 +111,40 @@ app.use(function(err, req, res, next) {
     title: 'P4M develop test'
   });
 });
-
+/**
+ * Устанавливаем уровень доступа к роутеру - если пользователь авторизован - иначе редирект на авторизацию
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
 }
-
+/**
+ * Устанавливаем уровень доступа в админку
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
+function ensureAdminAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect('/login')
+}
+/**
+ * из входящего запроса получаем список кукисов
+ * @param request
+ * @returns {{}}
+ */
+function parseCookies (request) {
+    var list = {},
+        rc = request.headers.cookie;
+    rc && rc.split(';').forEach(function( cookie ) {
+        var parts = cookie.split('=');
+        list[parts.shift().trim()] = decodeURI(parts.join('='));
+    });
+    return list;
+}
 module.exports = app;
