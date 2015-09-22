@@ -1,54 +1,24 @@
-<html lang="en" ng-app="appStats">
+<html lang="en" ng-app="app">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-<script>
-    angular.module('appStats', [])
-            .controller('paginationStatsCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
-                $scope.id = $routeParams.id;
-                $scope.itemsByPage=20;
-                $http.get('/tournament/info/'+ $scope.id).success(function(resp) {
-                    debugger;
-                    $scope.rowCollection = {};
-                    $scope.headersCollection = new Array();
-                    $scope.description = resp.tournament.description;
-                    if(data && data.length > 0){
-                        debugger;
-                        $scope.rowCollection = resp.data;
-                        for(var prop in resp.data[0]) {
-                            if(resp.data[0].hasOwnProperty(prop)) {
-                                $scope.headersCollection.push(prop)
-                            }
-                        }
-                    }
-                });
-            } ]);
-</script>
-<body ng-controller="paginationStatsCtrl">
-<h2>{{description}}</h2>
-<table st-table="rowCollection" class="table table-striped">
+<script src="/js/index.js"></script>
+<h2><%=description%></h2>
+<body ng-controller="tournamentDataCtrl" ng-init="init('<%=tournament_id%>')">
+<table st-table="playersInTournament" class="table table-striped">
     <thead>
-    <tr ng-repeat="line in headersCollection">
-        <% if(line != 'account_id') {%>
-        <th>line</th>
-        <%}%>
-    </tr>
+        <tr>
+            <th ng-repeat="col in tableHeaders">{{col}}</th>
+        </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="line in rowCollection">
-        <% for (var column in {{line}}) { %>
-            <% if(line.hasOwnProperty(column) && column != 'account_id') {%>
-                <% if(column == 'steam_name') {%>
-                <td id="tournament-account-profile"><a href="/profile/{{line.account_id}}">{{line[column]}}</a></td>
-                <% } else { %>
-                <td>{{line[column]}}</td>
-                <% }
-            }
-        } %>
-    </tr>
+        <tr ng-repeat="line in playersInTournament">
+            <td><a ng-href="/profile/{{line.account_id}}">{{line['steam_name']}}</a></td>
+            <td  ng-repeat="column in tableHeaders" ng-if= "column != 'steam_name'">{{line[column]}}</td>
+        </tr>
     </tbody>
     <tfoot>
     <tr>
-        <td colspan="5" class="text-center">
-            <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+        <td colspan="{{tableHeaders.length}}" class="text-center">
+            <div st-pagination="" st-items-by-page="{{itemsByPage}}" st-displayed-pages="7"></div>
         </td>
     </tr>
     </tfoot>

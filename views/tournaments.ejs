@@ -8,8 +8,8 @@
 <script>
     io = io.connect();
 </script>
-<script src="js/index.js"></script>
-<body ng-controller="paginationCtrl">
+<script src="/js/index.js"></script>
+<body ng-controller="tournamentListCtrl">
     <script>
         /*document.addEventListener("load", function(){
             vsr collection = rowCollection;
@@ -42,7 +42,7 @@
     <tbody>
     <tr ng-repeat="row in rowCollection">
         <td>{{row.index}}</td>
-        <td><a ng-href="/tournament/stats/{{row.id}}">{{row.name}}</a></td>
+        <td><a ng-href="/tournament/stats/{{row.tournament_id}}">{{row.name}}</a></td>
         <td>{{row.description}}</td>
         <td value="uCount">{{row.uCount}}</td>
         <% if (user) { %>
@@ -57,7 +57,7 @@
     <tfoot>
     <tr>
         <td colspan="5" class="text-center">
-            <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+            <div st-pagination="" st-items-by-page="{{itemsByPage}}" st-displayed-pages="7"></div>
         </td>
     </tr>
     </tfoot>

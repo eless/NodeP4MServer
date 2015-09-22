@@ -1,6 +1,7 @@
 /**
  * Created by Eless on 28.05.2015.
  */
+/*
 angular.module('appStats', [])
     .controller('paginationStatsCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
         $scope.id = $routeParams.id;
@@ -20,4 +21,4 @@ angular.module('appStats', [])
                 }
             }
         });
-    } ]);
+    } ]);*/

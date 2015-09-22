@@ -14,8 +14,9 @@ var stats = function(req, res) {
             });*/
             res.render('tournament_stats', {
                 name: "Stats: ",
-                description: "Descr",
+                description: "Your mom azaza",
                 title: 'P4M develop test',
+                tournament_id: req.params.id,
                 user: req.user/*,
                 data: data*/
             })
@@ -30,11 +31,7 @@ var getStats = function(req, res){
             //log.debug("Summary users: " + data.length);
             /*data.forEach(function(column){
             });*/
-            res.send({
-                user: req.user,
-                tournament: resp,
-                data: data
-            })
+            res.send(data)
         });
     });
 };

@@ -56,7 +56,7 @@ var index = require('./routes/index')
 app.get('/', index.router);
 
 app.get('/tournaments/tournaments.json', index.tournaments);
-app.get('/tournament/info/:id', tournament_stats.getStats);
+app.get('/tournament/stats/:id/stats.json', tournament_stats.getStats);
 
 app.get('/account', ensureAuthenticated, account.router);
 app.get('/adminpage', ensureAdminAuthenticated, admin.router);
