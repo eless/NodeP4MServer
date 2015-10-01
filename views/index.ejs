@@ -1,3 +1,4 @@
+<head>
 <% if (process.env.NODE_ENV == 'development') { %>
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <% } else { %>
@@ -9,17 +10,20 @@
         io.emit(event);
     }
 </script>
-<% include header %>
+    <% include header %>
+</head>
 <body>
-<% include navbar %>
-<% if (!user) { %>
-<h2>Welcome! Please log in.</h2>
-<% } else { %>
-<h2>Hello,
-    <a href="/account"><img src=<%= user.photos && user.photos.length? user.photos[0].value: "" %> /><%= user.displayName %>.</a>
-</h2>
+<div id="wrapper">
+    <% include navbar %>
+    <% if (!user) { %>
+    <h2>Welcome! Please log in.</h2>
+    <% } else { %>
+    <h2>Hello,
+        <a href="/account"><img src=<%= user.photos && user.photos.length? user.photos[0].value: "" %> /><%= user.displayName %>.</a>
+    </h2>
 
-<% } %>
+    <% } %>
 <% include tournaments %>
-</body>
+</div>
 <% include footer %>
+</body>

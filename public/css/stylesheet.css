@@ -6,3 +6,24 @@ body {
 a {
   color: #00B7FF;
 }
+#wrapper {
+  max-width: 960px;
+  margin: auto;
+}
+footer {
+  background: #20879a;
+  color: #1d1d1d;
+  font-size: 11px;
+}
+#footer {
+  max-width: 960px;
+  margin: auto;
+  padding: 10px 0;
+  height: 90px;
+}
+#footer-logo {
+  float: right;
+  margin-top: 20px;
+  font-size: 12px;
+  text-align: right;
+}
