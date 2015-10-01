@@ -27,3 +27,6 @@ footer {
   font-size: 12px;
   text-align: right;
 }
+#userbar {
+  float: right;
+}

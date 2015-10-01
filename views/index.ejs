@@ -15,14 +15,7 @@
 <body>
 <div id="wrapper">
     <% include navbar %>
-    <% if (!user) { %>
-    <h2>Welcome! Please log in.</h2>
-    <% } else { %>
-    <h2>Hello,
-        <a href="/account"><img src=<%= user.photos && user.photos.length? user.photos[0].value: "" %> /><%= user.displayName %>.</a>
-    </h2>
 
-    <% } %>
 <% include tournaments %>
 </div>
 <% include footer %>
