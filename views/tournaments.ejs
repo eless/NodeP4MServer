@@ -46,7 +46,7 @@
         <td>{{row.description}}</td>
         <td value="uCount">{{row.uCount}}</td>
         <% if (user) { %>
-        <td>
+        <td id="add-column-{{row.tournament_id}}">
             <button type="button" ng-click="row.addCurrentUser(<%=user.id%>)" class="btn btn-default">
                 Add to tournament
             </button>

@@ -21,6 +21,9 @@ app.controller('tournamentListCtrl', function ($scope, $filter, $http) {
         $scope.rowCollection.some(function(row, i){
             if(row.id == tournament.tournament_id){
                 row.uCount = tournament.count;
+                var node ='add-column-'+tournament.tournament_id;
+                var success = '<span class="label label-success">Success</span>';
+                $(success).appendTo(node);
                 alert('registered: ' + $scope.rowCollection[i].uCount);
                 return true;
             }

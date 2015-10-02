@@ -19,18 +19,6 @@ mysqlUtilities.upgrade(connection);
 // Mix-in for Introspection Methods
 mysqlUtilities.introspection(connection);
 
-var selectHero = function(table, num, callback){
-    var query = 'SELECT * FROM p4m.d2_hero';
-    if(num){
-        query += (' LIMIT ' + num);
-    }
-    connection.query(query, function(error, result){
-        if(error) {
-            log.error(error);
-        }
-        callback.call(this, result[num - 1].name);
-    })
-};
 var dbUser = {
     /**
      * get account_Id
@@ -174,7 +162,6 @@ var addTournament = function(req){
 
 
 
-module.exports.selectHero = selectHero;
 module.exports.dbUser = dbUser;
 module.exports.tournaments = getTournaments;
 module.exports.tournamentStats = getTournamentStats;
