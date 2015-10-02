@@ -8,20 +8,18 @@ a {
 }
 #wrapper {
   max-width: 960px;
-  margin: auto;
-}
-footer {
-  background: #20879a;
-  color: #1d1d1d;
-  font-size: 11px;
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -60px;
+  padding: 0 0 60px;
 }
 #footer {
   max-width: 960px;
   margin: auto;
   padding: 10px 0;
-  height: 90px;
+  height: 60px;
 }
-#footer-logo {
+.footer-logo {
   float: right;
   margin-top: 20px;
   font-size: 12px;
