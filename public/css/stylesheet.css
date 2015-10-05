@@ -10,7 +10,7 @@ a {
   max-width: 960px;
   min-height: 100%;
   height: auto;
-  margin: 0 auto -60px;
+  margin: 0 auto;
   padding: 0 0 60px;
 }
 #footer {

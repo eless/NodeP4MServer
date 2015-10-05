@@ -19,7 +19,10 @@
         });*/
 
     </script>
-<table st-table="rowCollection" class="table table-striped">
+    <div ng-if="rowCollection.length == 0" style="text-align: center">
+        <h2>No active tournaments</h2>
+    </div>
+<table st-table="rowCollection" ng-if="rowCollection.length != 0" class="table table-striped">
     <thead>
     <tr>
         <th width="50px" st-sort="No">No</th>
