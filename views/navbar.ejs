@@ -17,9 +17,9 @@
                     <h2>Hello,
                         <a href="/account"><img src=<%= user.photos && user.photos.length? user.photos[0].value: "" %> /><%= user.displayName %>.</a>
                     </h2>
-                    <li id="logout"><a href="/logout">Logout </a></li>
+                    <a id="logout"><a href="/logout">Logout </a>
                     <% if (user.isAdmin) { %>
-                        <li id="adminPage"><a href="/adminpage"><img src="/images/adminButton_24.png" /></a></li>
+                        <a id="adminPage" href="/adminpage"><img src="/images/adminButton_24.png" /></a>
                     <% }%>
                 <% }%>
             </div>
