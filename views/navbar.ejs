@@ -1,29 +1,23 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand" href="/"><img src="" alt="<%= title %>"></a>
         </div>
-        <div class="navbar-collapse collapse">
-            <div id="userbar">
+        <div>
+            <ul class="nav navbar-nav navbar-right">
                 <% if (!user) { %>
-                        <h2 id="login">Welcome! Please log in.<a href="/auth/steam"><img src="/images/steam_auth.png" /></a></h2>
+                        <li><h2 id="login">Welcome! Please log in.<a href="/auth/steam"><img src="/images/steam_auth.png" /></a></h2></li>
                 <% } else { %>
-                    <h2>Hello,
-                        <a href="/account"><img src=<%= user.photos && user.photos.length? user.photos[0].value: "" %> /><%= user.displayName %>.</a>
-                    </h2>
-                    <a id="logout"><a href="/logout">Logout </a>
+                    <li><a href="/account"><div><img src=<%= user.photos && user.photos.length? user.photos[0].value: "" %>><%= user.displayName %></div></a></li>
+                    <li><a id="logout" href="/logout">Logout</a></li>
                     <% if (user.isAdmin) { %>
-                        <a id="adminPage" href="/adminpage"><img src="/images/adminButton_24.png" /></a>
+                        <li><a id="adminPage" href="/adminpage"><img src="/images/adminButton_24.png" /></a></li>
                     <% }%>
                 <% }%>
-            </div>
+            </ul>
         </div>
         <!--/.navbar-collapse -->
     </div>
-</div>
+    </div>
+</nav>
